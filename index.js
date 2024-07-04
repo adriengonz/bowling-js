@@ -68,7 +68,6 @@ function playFrame() { // Play the turn
     if (game.currentFrame >= 10) { // Check if all frames are completed
         console.log('Partie terminée')
         EndGame(game)
-        // Rajouter possibilité de voir l'hitorique du jeu avec un oui/non mais vasi on verra après
         return
     }
 
@@ -125,9 +124,19 @@ function EndGame(game) { // Function who close the game
         console.log(`${index + 1} - ${player.name} : ${player.total}`)
      });
     console.log(`${game.players[0].name} est le/la gagnant(e) !`) 
-    rl.close() // Close readline interface
+    
+    rl.question("Voulez vous afficher les statistiques de la partie ? (o/n)", (statsResponse) => {
+        if (statsResponse == "o") { // Check choice of user
+            game.players.forEach((player) => { // Show statistics of every player
+                console.log(`${player.name} => ${player.frames}`)
+                rl.close() // Close readline interface
+             });
+        } else {
+            console.log("Fermeture du programme")
+            rl.close() // Close readline interface
+        }
+    });
 }
 
 const game = createBowlingGame(); // Create the game object
 initGame()
-//Ou rajouter ici voir l'historique
